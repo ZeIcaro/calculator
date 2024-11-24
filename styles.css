@@ -1,0 +1,51 @@
+.container {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    display: flex;
+}
+
+.items {
+    padding: 10px;
+    background-color: gainsboro;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-gap: 5px;
+}
+
+.input-screen, .red-button, .gray-button, .operands {
+    height: 75px;
+    box-sizing: border-box;
+    display: flex;
+
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.input-screen {
+    justify-content: flex-end;
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.red-button, .gray-button, .operands {
+    width: 75px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.red-button {
+    background-color: brown;
+}
+
+.gray-button {
+    background-color: darkgray;
+}
+
+.operands {
+    background-color: darkslategray;
+}
+

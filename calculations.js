@@ -51,22 +51,106 @@ function highlightButton () {
     });
 };
 
-// Runs highlightButton function to make them highlighteable
+
 highlightButton();
 
 
-// Returns the number or character corresponding to each button when pressed
 
-const onClick = function () {
-    console.log(this.id);
+// input Screen
+
+let inputScreen = document.querySelector(".input-screen");
+
+
+
+// Populates the Input Screen with numbers pressed
+
+const onClickNumbers = function () {
+    let command;
+    command = this.id;
+    console.log(command);
+
+    if (command === "plusminus") {
+        y = -y
+    } else if (command === "dot") {
+        if (Number.isInteger(y)) {
+            y = y + ".";
+        } else {
+            y = y;
+        };
+    } else if (!y) {
+        y = Number(command);
+    } else {
+        y = Number(y + command);
+    }        
+    
+    inputScreen.textContent = y;
 }
+
+
+// Returns the number or character corresponding to each button when pressed --- For Gray Buttons (number input)
 
 function pressNumber () {
     let numbersArray = document.querySelectorAll(".gray-button");
 
     numbersArray.forEach(function(elem) {
-        elem.addEventListener("click", (onClick));
+        elem.addEventListener("click", (onClickNumbers));
     });
 }
 
+
 pressNumber();
+
+
+// Selects operation based on Operand selection
+
+const onClickOperands = function () {
+    let command;
+    command = this.id;
+    console.log(command);
+
+    if (command === "plus") {
+        operation = "add"
+        x = y
+        y = null
+    } else if (command === "minus") {
+        operation = "subtract"
+        x = y
+        y = null
+    } else if (command === "multiply") {
+        operation = "multiply"
+        x = y
+        y = null
+    } else if (command === "divide") {
+        operation = "divide"
+        x = y
+        y = null
+    } else {
+        y = operate (operation, x, y)
+        inputScreen.textContent = y;
+    }
+
+
+    console.log(operation);
+    console.log(x);
+    console.log(y);
+};
+
+
+// Returns the operand corresponding to each button when pressed --- For Operands Buttons (operators)
+
+function pressOperand () {
+    let operandsArray = document.querySelectorAll(".operands");
+
+    operandsArray.forEach(function(elem) {
+        elem.addEventListener("click", (onClickOperands));
+    });
+}
+
+
+pressOperand();
+
+
+
+
+
+

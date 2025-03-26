@@ -66,8 +66,7 @@ let inputScreen = document.querySelector(".input-screen");
 
 const onClickNumbers = function () {
     let command;
-    command = this.id;
-    console.log(command);
+    command = this.id;  
 
     if (command === "plusminus") {
         y = -y
@@ -106,33 +105,114 @@ pressNumber();
 const onClickOperands = function () {
     let command;
     command = this.id;
-    console.log(command);
 
-    if (command === "plus") {
-        operation = "add"
-        x = y
-        y = null
-    } else if (command === "minus") {
-        operation = "subtract"
-        x = y
-        y = null
-    } else if (command === "multiply") {
-        operation = "multiply"
-        x = y
-        y = null
-    } else if (command === "divide") {
-        operation = "divide"
-        x = y
-        y = null
-    } else {
+    // scenario 1 - select operation after typing 1st value for the first time
+    if (typeof x !== "number" && typeof y === "number" && !operation) {
+        
+        if (command === "plus") {
+            operation = "add"
+            x = y
+            y = null
+        } else if (command === "minus") {
+            operation = "subtract"
+            x = y
+            y = null
+        } else if (command === "multiply") {
+            operation = "multiply"
+            x = y
+            y = null
+        } else if (command === "divide") {
+            operation = "divide"
+            x = y
+            y = null
+        } else {
+            operation = null
+        };
+
+        console.log(operation, x, y)
+        
+    // scenario 2 - typed the 1st value and operation, but no 2nd value
+    } else if (typeof x === "number" && typeof y !== "number" && operation) {
+        
+        if (command === "plus") {
+            operation = "add"
+        } else if (command === "minus") {
+            operation = "subtract"
+        } else if (command === "multiply") {
+            operation = "multiply"
+        } else if (command === "divide") {
+            operation = "divide"
+        } else {
+            operation = null
+        };
+
+        console.log(operation, x, y)
+
+    // scenario 3 - typed 1st value, followed by operation, followed by 2nd value
+    } else if (typeof x === "number" && typeof y === "number" && operation) {
+        
         y = operate (operation, x, y)
-        inputScreen.textContent = y;
+        inputScreen.textContent = y
+        x = y
+        y = null
+
+        if (command === "plus") {
+            operation = "add"
+        } else if (command === "minus") {
+            operation = "subtract"
+        } else if (command === "multiply") {
+            operation = "multiply"
+        } else if (command === "divide") {
+            operation = "divide"
+        } else {
+            operation = null
+        };
+
+        console.log(operation, x, y)
+
+    // scenario 4 - after executing scenario 3 and pressing "equal" (resets operation), press one of the operations 
+    // (will only select the next operation and send to scenario 2, or 3 if the user types the next number (y) afterwards)
+    } else if (typeof x === "number" && typeof y !== "number" && !operation) {
+
+        if (command === "plus") {
+            operation = "add"
+        } else if (command === "minus") {
+            operation = "subtract"
+        } else if (command === "multiply") {
+            operation = "multiply"
+        } else if (command === "divide") {
+            operation = "divide"
+        } else {
+            operation = null
+        };
+
+        console.log(operation, x, y)
+
+    // scenario 5 - after executing scenario 3, typed another number (y), and then select the operation
+    } else if (typeof x === "number" && typeof y === "number" && !operation) {
+        
+        if (command === "plus") {
+            operation = "add"
+            x = y
+            y = null
+        } else if (command === "minus") {
+            operation = "subtract"
+            x = y
+            y = null
+        } else if (command === "multiply") {
+            operation = "multiply"
+            x = y
+            y = null
+        } else if (command === "divide") {
+            operation = "divide"
+            x = y
+            y = null
+        } else {
+            operation = null
+        };
+
+        console.log(operation, x, y)
     }
-
-
-    console.log(operation);
-    console.log(x);
-    console.log(y);
 };
 
 
@@ -146,10 +226,37 @@ function pressOperand () {
     });
 }
 
-
 pressOperand();
 
 
+// Resets Calculator
+
+const onClickReset = function () {
+    let command;
+    command = this.id;
+
+    if (command === "AC" || command === "C") {
+        y = null
+        x = null
+        operation = null
+
+        inputScreen.textContent = 0
+    };
+    };
+
+
+// Returns the number or character corresponding to each button when pressed --- For Red Buttons (reset)
+
+function pressReset () {
+    let resetArray = document.querySelectorAll(".red-button");
+
+    resetArray.forEach(function(elem) {
+        elem.addEventListener("click", (onClickReset));
+    });
+}
+
+
+pressReset();
 
 
 
